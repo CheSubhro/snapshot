@@ -27,4 +27,17 @@
     height: 40vh;
 }
 
+.img-row {
+    width: 100%;
+}
+
+.img-row > img {
+    margin: 10px 10px;
+}
+
+.img-row > img:hover {
+    transform: scale(1.2);
+    transition: 2s all linear;
+}
+
 
