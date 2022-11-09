@@ -19,6 +19,12 @@
     margin-top: 75px;
 }
 
+.main-container .main-row .main-col .btn{
+    display: flex;
+    width: 10%;
+    height: 9vh;
+}
+
 .imagelist-row .imagelist-col{
      display: flex; 
     justify-content: center;

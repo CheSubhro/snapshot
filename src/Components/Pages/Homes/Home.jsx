@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
-import ImageList from '@mui/material/ImageList'
-import ImageListItem from '@mui/material/ImageListItem'
 import Button from '@mui/material/Button'
 import './Home.css'
 import axios from 'axios';
 import { useEffect } from 'react'
+import Modal from './MyModal';
 
 
 const Home = () => {
@@ -17,6 +16,10 @@ const Home = () => {
     const [value, setValue] = useState('');
     const [inputValue, setInputValue] = useState('');
     const [photos, setPhotos] = useState('');
+    const [currentImg, setCurrentImg] = useState('');
+    const [imgName, setImgName] = useState('');
+    const [open, setOpen] = useState(false);
+
 
     useEffect(() => {
         const url = `https://api.pexels.com/v1/search?query=nature`;
@@ -42,61 +45,56 @@ const Home = () => {
         })
     }
 
+    function handleModal(data) {
+        setCurrentImg(data.src.original)
+        setImgName(data.alt)
+        setOpen(true)
+    }
     return (
-        <div className='main-container'>
-            <div className='main-row'>
-                <div className='main-col'>
+        <>
+            <div className='main-container'>
+                <div className='main-row'>
+                    <div className='main-col'>
+                        <Autocomplete
+                            value={value}
+                            onChange={(event, newValue) => {
+                                setValue(newValue);
+                            }}
+                            inputValue={inputValue}
+                            onInputChange={(event, newInputValue) => {
+                                setInputValue(newInputValue);
+                            }}
 
-                    <Autocomplete
-                        value={value}
-                        onChange={(event, newValue) => {
-                            setValue(newValue);
-                        }}
-                        inputValue={inputValue}
-                        onInputChange={(event, newInputValue) => {
-                            setInputValue(newInputValue);
-                        }}
+                            id="combo-box-demo"
+                            options={options}
+                            sx={{ width: 300 }}
+                            renderInput={(params) => <TextField {...params} label="Image" />}
+                        />
 
-                        id="combo-box-demo"
-                        options={options}
-                        sx={{ width: 300 }}
-                        renderInput={(params) => <TextField {...params} label="Image" />}
-                    />
-                    <Button 
-                    varient="contained"
-                    onClick={handleSearch}>Search</Button>
-
+                        <Button
+                            varient="contained"
+                            onClick={handleSearch} className="btn"> Search
+                        </Button>
+                    </div>
                 </div>
-            </div>
 
-            <div className='imagelist-row'>
-                <div className='imagelist-col'>
-                    {/* <ImageList>
-                        <ImageListItem>
-
-                            <img
-                                src={photos}
-                                srcSet=""
-                                alt="Image"
-                                loading="lazy"
-                            />
-                        </ImageListItem>
-                    </ImageList> */}
-                    <div className='img-row'>
-                        {
-                            photos && photos.map((data, index) => {
-                                return (
-                                    <>
-                                        <img key={index} src={data.src.small} alt="" />
-                                    </>
-                                )
-                            })
-                        }
+                <div className='imagelist-row'>
+                    <div className='imagelist-col'>
+                        <div className='img-row'>
+                            {
+                                photos && photos.map((data, index) => {
+                                    return (
+                                        <img key={index} src={data.src.small}
+                                            onClick={() => handleModal(data)} alt="" />
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
+            <Modal image={currentImg} title={imgName} display={open} />
+        </>
     )
 }
 
