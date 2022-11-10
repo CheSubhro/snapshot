@@ -4,24 +4,18 @@ import './MyModal.css';
 
 
 const MyModal = (props) => {
-    // console.log(props)
-
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => {
-        setOpen(false);
-      };
-
+    const handleOpen = props.handleOpen
+    const handleClose = props.handleClose
     
-
     return (
         <>
             <div>
                 <Modal
-                    open={props.display}>
+                    open={handleOpen}
+                    onClose={handleClose}>
                         <div className="modal-body">
-                            <div className="close-btn" onClick={handleClose}>X</div>
                             <div className="modal-img">
+                                <div className="close-btn" onClick={handleClose}>X</div>
                                 <img src={ props.image } alt="" />
                                 <div className="modal-desc">
                                     <h4>
@@ -29,8 +23,7 @@ const MyModal = (props) => {
                                     </h4>  
                                 </div> 
                             </div>
-                        </div> 
-                          
+                        </div>    
                 </Modal>
             </div>
         </>

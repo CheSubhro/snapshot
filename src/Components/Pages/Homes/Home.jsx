@@ -3,9 +3,11 @@ import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import Button from '@mui/material/Button'
 import './Home.css'
-import axios from 'axios';
+import axios from 'axios'
 import { useEffect } from 'react'
-import Modal from './MyModal';
+import Modal from './MyModal'
+
+
 
 
 const Home = () => {
@@ -18,7 +20,7 @@ const Home = () => {
     const [photos, setPhotos] = useState('');
     const [currentImg, setCurrentImg] = useState('');
     const [imgName, setImgName] = useState('');
-    const [open, setOpen] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
 
 
     useEffect(() => {
@@ -48,8 +50,13 @@ const Home = () => {
     function handleModal(data) {
         setCurrentImg(data.src.original)
         setImgName(data.alt)
-        setOpen(true)
+        setOpenModal(true)
     }
+
+    function handleClose() {
+        setOpenModal(false)
+    }
+
     return (
         <>
             <div className='main-container'>
@@ -77,7 +84,14 @@ const Home = () => {
                         </Button>
                     </div>
                 </div>
-
+                
+                <div className='gallery-row'>
+                    <div className='gallery-col'>
+                        <h4><u>Gallery</u></h4>    
+                        <img src="/gallery.png" alt=""/>
+                    </div>         
+                </div>
+                
                 <div className='imagelist-row'>
                     <div className='imagelist-col'>
                         <div className='img-row'>
@@ -93,7 +107,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <Modal image={currentImg} title={imgName} display={open} />
+            <Modal image={currentImg} title={imgName} handleOpen = { openModal } handleClose = { handleClose } />
         </>
     )
 }
