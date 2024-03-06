@@ -48,6 +48,7 @@ const Home = () => {
     }
 
     function handleModal(data) {
+        console.log(data)
         setCurrentImg(data.src.original)
         setImgName(data.alt)
         setOpenModal(true)

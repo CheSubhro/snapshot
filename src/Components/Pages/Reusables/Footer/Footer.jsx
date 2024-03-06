@@ -10,7 +10,7 @@ const Footer = () => {
     <Container>
       <Row>
         <Col className='footer'>
-          2022 &copy; | Gallery-Pexels
+          2024 &copy; | Gallery-Pexels
         </Col>
       </Row>
     </Container>
